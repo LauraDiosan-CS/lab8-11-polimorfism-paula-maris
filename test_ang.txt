@@ -1,0 +1,4 @@
+1 john jonny@yahoo.com 2
+2 mary maria_anne@gmail.com 1
+3 lucy luk@yahoo.com 1
+4 srs mavis@yahoo.com 2
