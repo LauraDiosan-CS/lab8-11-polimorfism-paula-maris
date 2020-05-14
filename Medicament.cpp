@@ -27,7 +27,7 @@ Medicament::Medicament(string linie, char delim)
 	vector<string> tokens = splitLine(linie, delim);
 	id = stoi(tokens[0]);
 	nume = tokens[1];
-	
+
 	necesita_reteta = stoi(tokens[2]);
 	nr_stoc = stoi(tokens[3]);
 	producator = tokens[4];
@@ -35,8 +35,11 @@ Medicament::Medicament(string linie, char delim)
 
 //constructor cu parametri
 Medicament::Medicament(int id, string nume, bool necesita_reteta, int nr_stoc, string producator) {
-	this->nume = nume; 
+	this->nume = nume; /*new char[strlen(nume) + 1];
+	strcpy_s(this->nume, strlen(nume) + 1, nume);*/
 	this->producator = producator;
+	/*new char[strlen(producator) + 1];
+strcpy_s(this->producator, strlen(producator) + 1, producator);*/
 	this->id = id;
 	this->nr_stoc = nr_stoc;
 	this->necesita_reteta = necesita_reteta;
@@ -46,6 +49,10 @@ Medicament::Medicament(int id, string nume, bool necesita_reteta, int nr_stoc, s
 Medicament::Medicament(const Medicament& s) {
 	this->nume = s.nume;
 	this->producator = s.producator;
+	/*this->nume = new char[strlen(s.nume) + 1];
+	strcpy_s(this->nume, strlen(s.nume) + 1, s.nume);
+	this->producator = new char[strlen(s.producator) + 1];
+	strcpy_s(this->producator, strlen(s.producator) + 1, s.producator);*/
 	this->nr_stoc = s.nr_stoc;
 	this->necesita_reteta = s.necesita_reteta;
 	this->id = s.id;
@@ -153,6 +160,10 @@ ostream& operator<<(ostream& os, const Medicament& p)
 
 istream& operator>>(istream& is, Medicament& p)
 {
+	/*if (p.producator == NULL)
+		p.producator = new char[20];
+	if (p.nume == NULL)
+		p.nume = new char[20];*/
 	is >> p.id >> p.nume >> p.necesita_reteta >> p.nr_stoc >> p.producator;
 	return is;
 }

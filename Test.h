@@ -6,6 +6,10 @@
 #include "Medicament.h"
 #include "Angajat.h"
 #include "User.h"
+#include "Service.h"
+#include "ValidatorAngajat.h"
+#include "ValidatorMedicament.h"
+#include "Exceptions.h"
 
 class Test
 {
@@ -13,7 +17,11 @@ private:
 	void runCSVTests();
 	void runTXTTests();
 	void runInMemoryTests();
-	void runLiveTests();
+	void runLiveTests1();
+	void runServiceTests();
+	void runExceptionTests();
+	void runLoginTests();
+	void runLiveTests2();
 public:
 	Test();
 	void runTests();

@@ -29,6 +29,7 @@ void RepositoryFileCSV<T>::loadFromFile()
 {
 	string line;
 	ifstream f(Repository<T>::fileName);
+	//ifstream f(fileName);
 	while (getline(f, line)) {
 		T ob(line, ',');
 		IRepository<T>::elem.push_back(ob);
@@ -54,4 +55,3 @@ template<class T>
 RepositoryFileCSV<T>::~RepositoryFileCSV()
 {
 }
-

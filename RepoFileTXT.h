@@ -21,7 +21,7 @@ inline RepositoryFileTXT<T>::RepositoryFileTXT()
 }
 
 template<class T>
-inline RepositoryFileTXT<T>::RepositoryFileTXT(const char* fName) :Repository<T>(fName)
+inline RepositoryFileTXT<T>::RepositoryFileTXT(const char* fName) : Repository<T>(fName)
 {
 }
 

@@ -1,10 +1,10 @@
 #include "User.h"
 
 
-User::User(){
+User::User() {
 }
 
-User::User(string u, string p) :userName(u), password(p){
+User::User(string u, string p) :userName(u), password(p) {
 }
 
 string User::getUserName()
@@ -42,5 +42,5 @@ string User::toStringDelimiter(char delimiter)
 	return userName + delimiter + password;
 }
 
-User::~User(){
+User::~User() {
 }

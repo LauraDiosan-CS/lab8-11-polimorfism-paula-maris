@@ -13,14 +13,13 @@ public:
 	T findElemFromId(int id);
 	void update(T&, T&);
 	int remove(int id);
+	int deleteElem(T&);
 	int size();
 	vector<T> getAll();
 };
 
-//constructor 
 template<class T>
-inline IRepository<T>::IRepository()
-{
+inline IRepository<T>::IRepository(){
 }
 
 //Adaugarea unui element
@@ -44,12 +43,22 @@ inline void IRepository<T>::update(T& vechi, T& nou)
 
 
 //Stergerea unui element
-//in: id-ul obiectului de sters
+//in: un obiect de tip T
 //out: vectorul elem fara elementul sters
+template<class T>
+inline int IRepository<T>::deleteElem(T& e)
+{
+	auto last = std::remove(elem.begin(), elem.end(), e);
+	if (last != elem.end()) {
+		elem.erase(last, elem.end());
+		return 0;
+	}
+	return -1;
+}
+
 template<class T>
 inline int IRepository<T>::remove(int id)
 {
-
 	for (int i = 0; i < elem.size(); i++) {
 		if (elem[i].getId() == id)
 		{
@@ -59,7 +68,6 @@ inline int IRepository<T>::remove(int id)
 	}
 	return -1;
 }
-
 
 //Aflarea unui element in repo
 //in: un obiect de tip T
