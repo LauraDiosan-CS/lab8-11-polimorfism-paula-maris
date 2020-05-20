@@ -36,13 +36,9 @@ public:
 	void deleteAng(Angajat&);
 	void updateAng(Angajat&, Angajat&);
 	void changeGrad(string nume_utilizator,int change_id, int change_grad_acces);
-	//void buyTicket(string destinatie, string data, string ora, int nrLocuri);
-	//int findAvailableSeats(string destinatie, string data, string ora);
-	//int findSoldSeats(string destinatie, string data, string ora);
 	vector<Medicament> getAllMed();
 	vector<Medicament> getAll();
 	vector<Angajat> getAllAng();
-	//vector<Zbor> getAllFlightsToDestination(string destinatie);
 	~Service();
 };
 
