@@ -1,6 +1,10 @@
 #include "Service.h"
 #include "User.h"
 #include <string>
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
+using namespace std;
 
 Service::Service(){
 }
@@ -15,11 +19,48 @@ Service::Service(IRepository<Medicament>* repoMed, IRepository<Angajat>* repoAng
 	User u3("Maria", "123");
 	User u4("Mihai", "29");
 	User u5("Dana", "222");
+	User u6("Mara", "23");
 	repoUser->add(u1);
 	repoUser->add(u2);
 	repoUser->add(u3);
 	repoUser->add(u4);
 	repoUser->add(u5);
+}
+
+
+// Returns a string of random alphabets of 
+// length n. 
+string printRandomString(int n)
+{
+	const int MAX = 26;
+	char alphabet[MAX] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g',
+						  'h', 'i', 'j', 'k', 'l', 'm', 'n',
+						  'o', 'p', 'q', 'r', 's', 't', 'u',
+						  'v', 'w', 'x', 'y', 'z' };
+
+	string res = "";
+	for (int i = 0; i < n; i++)
+		res = res + alphabet[rand() % MAX];
+
+	return res;
+}
+
+void Service::random200Angajati() {
+
+	int id = 0; string email; string nume; int grad_acces; string parola;
+	
+	for (int i = 0; i < 200; i++) {
+		id = rand() % 100;
+		grad_acces = rand() % 100;
+		srand(time(NULL));
+		nume = printRandomString(5);
+		email = printRandomString(7);
+		parola = "random";
+		User u(nume, parola);
+		repoUser->add(u);
+		Angajat random(id,nume,email,grad_acces);
+		addAng(id, nume, email, grad_acces);
+	}
 }
 
 

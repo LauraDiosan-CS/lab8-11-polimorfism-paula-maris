@@ -90,23 +90,7 @@ void Test::runInMemoryTests()
 	assert(repoUseri->findElem(u) == 0);
 }
 
-void Test::runLoginTests()
-{
-	IRepository<Angajat>* repoAng = new RepositoryFileCSV<Angajat>();
-	IRepository<Medicament>* repoMed = new RepositoryFileCSV<Medicament>();
-	IRepository<User>* repoUser = new RepositoryInMemory<User>();
 
-	User u1("Dana", "12");
-	repoUser->add(u1);
-	User u2("Maria", "23");
-	repoUser->add(u2);
-
-	Service s(repoMed, repoAng, repoUser);
-
-	assert(s.login("Ana", "123") == true);		//deja s-a adaugat in User (in Service)
-	assert(s.login("Maria", "23") == true);
-	assert(s.login("Maria", "3") == false);
-}
 
 void Test::runServiceTests() 
 {
@@ -267,6 +251,73 @@ void Test::runLiveTests1()
 	assert(repo->getAll().size() == 2);
 }
 
+void Test::runLoginTests()
+{
+	IRepository<Angajat>* repoAng = new RepositoryFileCSV<Angajat>();
+	IRepository<Medicament>* repoMed = new RepositoryFileCSV<Medicament>();
+	IRepository<User>* repoUser = new RepositoryInMemory<User>();
+
+	User u1("Dana", "12");
+	repoUser->add(u1);
+	User u2("Maria", "23");
+	repoUser->add(u2);
+
+	Service s(repoMed, repoAng, repoUser);
+
+	assert(s.login("Ana", "123") == true);		//deja s-a adaugat in User (in Service)
+	assert(s.login("Zana", "123") == false);	//ambele gresite
+	assert(s.login("Maria", "23") == true);
+	assert(s.login("Maria", "3") == false);		//parola gresita
+
+	User u6("Mara", "23");
+	repoUser->add(u6);
+
+	//login:
+	s.login("Mara", "23");
+
+	//logout:
+	s.logout("Mara", "23");
+	assert(repoUser->findElem(u6) == -1);	//este sters din repoUser
+
+	assert(s.login("Maria", "23") == true); //login din nou
+}
+
+void Test::runLiveTests3() 
+{
+	IRepository<Angajat>* repoAng = new RepositoryFileCSV<Angajat>("");
+	IRepository<Medicament>* repoMed = new RepositoryFileCSV<Medicament>("");
+	IRepository<User>* repoUser = new RepositoryInMemory<User>();
+
+	Service service(repoMed, repoAng, repoUser);
+
+	service.random200Angajati();
+	assert(service.getAllAng().size() == 200);	//am adaugat in service 200 angajati
+
+	assert(service.login(service.getAllAng()[0].getNume(), "random") == true);	//logare cu succes
+
+	int j;
+	int contor = -1;
+	int not_ok = 0;
+	for (int i = 0; i < 1000; i++) {
+		j = i;
+		if (j % 101 == 0)
+			contor = contor + 1;	//se mareste de fiecare data cand trece de un multiplu de 101
+		if (j > 100)				//daca depaseste numarul de angajati
+			j = i - 100 * contor;
+				 
+		service.login(service.getAllAng()[j].getNume(), "random");
+		
+		Angajat random = service.getAllAng()[10];
+
+		if (service.getAllAng()[j].getGradAcces() < random.getGradAcces())
+			not_ok++;
+		else
+			service.changeGrad(service.getAllAng()[j].getNume(), random.getId(), random.getGradAcces() + 13);
+		//assert(service.login(service.getAllAng()[j].getNume(), "random") == true);
+	}
+	assert(not_ok > 0);
+}
+
 void Test::runTests()
 {
 	runCSVTests();
@@ -277,6 +328,7 @@ void Test::runTests()
 	runExceptionTests();
 	runLoginTests();
 	runLiveTests2();
+	runLiveTests3();
 }
 
 

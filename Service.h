@@ -39,6 +39,7 @@ public:
 	vector<Medicament> getAllMed();
 	vector<Medicament> getAll();
 	vector<Angajat> getAllAng();
+	void random200Angajati();
 	~Service();
 };
 

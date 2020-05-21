@@ -22,6 +22,7 @@ private:
 	void runExceptionTests();
 	void runLoginTests();
 	void runLiveTests2();
+	void runLiveTests3();
 public:
 	Test();
 	void runTests();
